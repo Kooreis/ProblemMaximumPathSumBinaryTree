@@ -1,13 +1,19 @@
-import java.util.Scanner;
+class BinaryTree {
+    Node root;
 
-class Node {
-    int data;
-    int maxPathSum;
-    Node left, right;
+    int findMaxUtil(Node node) {
+        if (node == null)
+            return 0;
 
-    Node(int item) {
-        data = item;
-        maxPathSum = Integer.MIN_VALUE;
-        left = right = null;
+        int left = findMaxUtil(node.left);
+        int right = findMaxUtil(node.right);
+
+        int max_single = Math.max(Math.max(left, right) + node.data, node.data);
+
+        int max_top = Math.max(max_single, left + right + node.data);
+
+        node.maxPathSum = Math.max(node.maxPathSum, max_top);
+
+        return max_single;
     }
 }
